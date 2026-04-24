@@ -270,7 +270,7 @@ async function send(){
   addMsg('u',txt);hist.push({role:'user',content:txt});
   const tid=addTyping();
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':akey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:cur.sys,messages:hist})});
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':akey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:cur.sys,messages:hist})});
     rmTyping(tid);
     if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||`Erro ${r.status}`);}
     const d=await r.json();const rep=d.content.map(b=>b.type==='text'?b.text:'').join('');
